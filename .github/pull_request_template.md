@@ -7,9 +7,10 @@ _Please enter a short description of your change here._
 # Checklist
 
 ## Before raising your pull request:
+- [ ] Commit messages that conform to conventional commit messages
 - [ ] Ran the app locally ensuring it builds 
 - [ ] Ran the tests locally ensuring they pass on Build
-- [ ] Pull request has a clear title with ticket ID and a short description about the feature or update
+- [ ] Pull request has a clear title with a short description about the feature or update
 - [ ] Created a `draft` pull request if it is not yet ready for review
 
 ## Before your pull request can be reviewed:
