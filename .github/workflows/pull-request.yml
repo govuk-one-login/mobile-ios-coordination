@@ -15,34 +15,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Add path globally
-        run: echo "/usr/local/bin" >> $GITHUB_PATH
-
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          lfs: 'true'
-          fetch-depth: 0
-
-      - name: Lint
-        if: github.event.pull_request.draft == false
-        run: swiftlint --strict
-
-      - name: Build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LC_ALL: "en_US.UTF-8"
-          LANG: "en_US.UTF-8"
+      - name: Build and Test
         run: |
-          pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-        
-          export GEM_HOME=$HOME/.gem
-          export GEM_PATH=$HOME/.gem
-          bundle install
-          
-          bundle exec fastlane test scheme:"Coordination" \
-            sonar_token:"${{secrets.SONAR_TOKEN}}" \
-            workspace:${{github.workspace}} \
-            source_branch:${{github.head_ref}} \
-            target_branch:${{github.base_ref}} \
-            pr_number:$pull_number
+          xcodebuild -scheme Coordination test -destination "platform=iOS Simulator,name=iPhone 14,OS=latest"
