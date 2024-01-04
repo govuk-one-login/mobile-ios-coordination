@@ -15,7 +15,6 @@ public extension TabCoordinator where Self: ParentCoordinator {
     /// - Parameters:
     ///   - childCoordinator: The Child Coordinator that should be presented
     func addTab<T: AnyCoordinator & ChildCoordinator>(_ childCoordinator: T) {
-//        root.viewControllers?.append(childCoordinator.root)
         root.addChild(childCoordinator.root)
         openChild(childCoordinator)
     }
