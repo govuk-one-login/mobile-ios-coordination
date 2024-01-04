@@ -15,8 +15,8 @@ public protocol ParentCoordinator: Coordinator {
 extension ParentCoordinator {
     func openChild(_ childCoordinator: ChildCoordinator) {
         childCoordinators.append(childCoordinator)
-        childCoordinator.start()
         childCoordinator.parentCoordinator = self
+        childCoordinator.start()
     }
 }
 
