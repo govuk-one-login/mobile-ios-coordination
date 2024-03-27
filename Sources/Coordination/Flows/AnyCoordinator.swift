@@ -14,8 +14,9 @@ extension AnyCoordinator where Self: ParentCoordinator {
     ///
     /// - Parameters:
     ///   - childCoordinator: The Child Coordinator that should be presented
-    public func openChildModally<T: AnyCoordinator & ChildCoordinator>(_ childCoordinator: T) {
-        root.present(childCoordinator.root, animated: true)
+    public func openChildModally<T: AnyCoordinator & ChildCoordinator>(_ childCoordinator: T,
+                                                                       animated: Bool = true) {
+        root.present(childCoordinator.root, animated: animated)
         openChild(childCoordinator)
     }
 }
