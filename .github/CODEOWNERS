@@ -2,5 +2,5 @@
 # The following below will be requested for review when someone opens a pull request.
 
 
-*  @govuk-one-login/mobile-common-ios
+*  @govuk-one-login/mobile-platform @govuk-one-login/mobile-leads
 
