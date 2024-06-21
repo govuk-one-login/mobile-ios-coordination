@@ -1,10 +1,11 @@
 @testable import Coordination
 import XCTest
 
-@MainActor
+
 final class TabCoordinatorTests: XCTestCase {
     var sut: MockTabCoordinator!
     
+    @MainActor
     override func setUp() {
         sut = MockTabCoordinator()
     }
@@ -15,11 +16,13 @@ final class TabCoordinatorTests: XCTestCase {
 }
 
 extension TabCoordinatorTests {
+    @MainActor
     func testCoordinatorStart() {
         sut.start()
         XCTAssertTrue(sut.coordinatorDidStart)
     }
     
+    @MainActor
     func testAddingTab() {
         XCTAssertEqual(sut.childCoordinators.count, 0)
         XCTAssertNil(sut.root.tabBar.items)
