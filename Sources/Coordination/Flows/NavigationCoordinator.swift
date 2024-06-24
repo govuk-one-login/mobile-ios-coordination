@@ -17,7 +17,10 @@ public extension NavigationCoordinator where Self: ParentCoordinator {
     func openChildInline<T: NavigationCoordinator & ChildCoordinator>(_ childCoordinator: T) {
         root.delegate = childCoordinator
         openChild(childCoordinator)
-        assert(childCoordinator.root === root, "Child coordinators presented inline should have the same navigation controller as their parent.")
+        guard childCoordinator.root === root else {
+            assertionFailure("Child coordinators presented inline should have the same navigation controller as their parent.")
+            return
+        }
     }
     
     /// When a presented child coordinator is dismissed, performs the cleanup.
