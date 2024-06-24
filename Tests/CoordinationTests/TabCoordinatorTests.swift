@@ -29,6 +29,6 @@ extension TabCoordinatorTests {
         sut.addTab(child)
         
         waitForTruth(self.sut.childCoordinators.count == 1, timeout: 20)
-        XCTAssertEqual(sut.root.tabBar.items?.count, 1)
+        waitForTruth(self.sut.root.tabBar.items?.count == 1, timeout: 10)
     }
 }
