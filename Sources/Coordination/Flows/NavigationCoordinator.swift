@@ -17,7 +17,6 @@ public extension NavigationCoordinator where Self: ParentCoordinator {
     func openChildInline<T: NavigationCoordinator & ChildCoordinator>(_ childCoordinator: T) {
         root.delegate = childCoordinator
         openChild(childCoordinator)
-        
         guard childCoordinator.root === root else {
             assertionFailure("Child coordinators presented inline should have the same navigation controller as their parent.")
             return

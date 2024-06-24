@@ -6,13 +6,15 @@ final class MockChildCoordinator: NSObject,
                                   ChildCoordinator,
                                   NavigationCoordinator {
     var parentCoordinator: ParentCoordinator?
-    let root: UINavigationController = UINavigationController()
+    let root: UINavigationController
     var isTabChild: Bool
     
     var coordinatorDidStart = false
     
-    init(isTabChild: Bool = true) {
+    init(isTabChild: Bool = true,
+         root: UINavigationController = UINavigationController()) {
         self.isTabChild = isTabChild
+        self.root = root
     }
     
     func start() {
