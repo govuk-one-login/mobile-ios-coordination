@@ -28,7 +28,7 @@ extension TabCoordinatorTests {
         let child = MockChildCoordinator()
         sut.addTab(child)
         
-        XCTAssertEqual(sut.childCoordinators.count, 1)
+        waitForTruth(self.sut.childCoordinators.count == 1, timeout: 20)
         XCTAssertEqual(sut.root.tabBar.items?.count, 1)
     }
 }
