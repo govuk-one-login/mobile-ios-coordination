@@ -6,7 +6,6 @@ import UIKit
 @MainActor
 public protocol TabCoordinator: Coordinator, UITabBarControllerDelegate {
     var root: UITabBarController { get }
-    func didBecomeSelected()
 }
 
 public extension TabCoordinator where Self: ParentCoordinator {
@@ -25,18 +24,33 @@ public extension TabCoordinator where Self: ParentCoordinator {
 //public protocol TabItemCoordinator: Coordinator {
 //    func didBecomeSelected()
 //}
+//
+//public extension TabCoordinator where Self: ParentCoordinator {
+//    @MainActor
+//    func tabBarController(_ tabBarController: UITabBarController,
+//                          didSelect viewController: UIViewController) {
+//        
+//        if let children = childCoordinators as? [any AnyCoordinator] {
+//            let this = children.first(where: {$0.root == viewController})
+//            
+//            if this != nil {
+//                didBecomeSelected()
+//            }
+//        }
+//    }
+//}
 
 public extension TabCoordinator where Self: ParentCoordinator {
     @MainActor
     func tabBarController(_ tabBarController: UITabBarController,
                           didSelect viewController: UIViewController) {
-        
-        if let children = childCoordinators as? [any AnyCoordinator] {
-            let this = children.first(where: {$0.root == viewController})
-            
-            if this != nil {
-                didBecomeSelected()
-            }
-        }
+
+        guard let selectedChild = (childCoordinators as? [any AnyCoordinator])?
+            .first(where: { $0.root == viewController }) as? TabItemCoordinator else { return }
+        selectedChild.didBecomeSelected()
     }
+}
+
+public protocol TabItemCoordinator: Coordinator {
+    func didBecomeSelected()
 }
