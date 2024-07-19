@@ -4,7 +4,7 @@ import UIKit
 ///
 /// A coordinator which displays one or more view controllers within a UITabBarController context.
 @MainActor
-public protocol TabCoordinator: Coordinator {
+public protocol TabCoordinator: Coordinator, UITabBarControllerDelegate {
     var root: UITabBarController { get }
 }
 
@@ -17,5 +17,24 @@ public extension TabCoordinator where Self: ParentCoordinator {
     func addTab<T: AnyCoordinator & ChildCoordinator>(_ childCoordinator: T) {
         root.addChild(childCoordinator.root)
         openChild(childCoordinator)
+    }
+}
+
+public protocol TabItemCoordinator: Coordinator {
+    func didBecomeSelected()
+}
+
+public extension TabItemCoordinator where Self: ParentCoordinator {
+    @MainActor
+    func tabBarController(_ tabBarController: UITabBarController,
+                          didSelect viewController: UIViewController) {
+        
+        if let children = childCoordinators as? [any AnyCoordinator] {
+            let this = children.first(where: {$0.root == viewController})
+            
+            if this != nil {
+                didBecomeSelected()
+            }
+        }
     }
 }
