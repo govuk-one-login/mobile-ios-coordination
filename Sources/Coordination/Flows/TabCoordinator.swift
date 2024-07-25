@@ -3,6 +3,7 @@ import UIKit
 /// Tab Coordinator
 ///
 /// A coordinator which displays one or more view controllers within a UITabBarController context.
+@available(*, deprecated, renamed: "TabCoordinatorV2", message: "This protocol is deprecated and will be removed in a future release")
 @MainActor
 public protocol TabCoordinator: Coordinator {
     var root: UITabBarController { get }
