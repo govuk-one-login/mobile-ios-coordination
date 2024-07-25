@@ -35,6 +35,8 @@ Each self-contained flow within the application can conform to the `Coordinator`
 
 `TabCoordinator` is usable within a tab bar hierarchy to open a child modally.
 
+`TabCoordinatorV2` is usable within a tab bar hierarchy to open a child modally, with the addition of a delegate to alert when the child tab has been selected.
+
 `NavigationCoordinator` is usable within a navigation hierarchy to open a child inline, it should also act as the navigation controller delegate.
 
 ### `ParentCoordinator` types can present `ChildCoordinator` types, when sub-flows are needed.
@@ -102,6 +104,32 @@ class PrimaryCoordinator: TabCoorinator, ParentCoordinator {
 class SecondaryCoordinator: AnyCoordinator, ChildCoordinator {
     let root: UIViewController
     weak var parentCoordinator: ParentCoordinator?
+}
+```
+
+Using the Coordinator pattern in a tab bar navigation, conforming to `TabCoordinatorV2` is appropriate. Also conforming to `ParentCoordinator` allows a child to be opened as a tab. Conforming to `ChildCoordinator` allows finishing the child which calls the `didRegainFocus(fromChild child: ChildCoordinator?). Conforming to `TabItemCoordinator` allows callbacks for `tabBarController` delegate)`
+
+```swift
+class PrimaryCoordinator: TabCoorinatorV2, ParentCoordinator {
+    let root: UITabBarController
+    var childCoordinators: [ChildCoordinator] = []
+    
+    lazy var delegate: TabCoordinatorDelegate? = {
+        TabCoordinatorDelegate(coordinator: self)
+    }()
+    
+    override func didRegainFocus(fromChild child: ChildCoordinator?) {
+        // Perform any operations after the parent regains focus
+    }
+}
+
+class SecondaryCoordinator: AnyCoordinator, ChildCoordinator, TabItemCoordinator  {
+    let root: UIViewController
+    weak var parentCoordinator: ParentCoordinator?
+    
+    func didBecomeSelected() {
+        // Tab has been selected
+    }
 }
 ```
 
