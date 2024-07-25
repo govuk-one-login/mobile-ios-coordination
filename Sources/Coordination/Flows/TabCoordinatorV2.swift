@@ -25,13 +25,13 @@ public extension TabCoordinatorV2 where Self: ParentCoordinator {
 public class TabCoordinatorDelegate: NSObject,
                                      UITabBarControllerDelegate {
     weak var coordinator: (any ParentCoordinator)?
-
+    
     public init(coordinator: any ParentCoordinator) {
         self.coordinator = coordinator
     }
-
+    
     public func tabBarController(_ tabBarController: UITabBarController,
-                          didSelect viewController: UIViewController) {
+                                 didSelect viewController: UIViewController) {
         guard let children = coordinator?.childCoordinators as? [any AnyCoordinator],
               let selectedChild = children.first(where: { $0.root == viewController })
                 as? TabItemCoordinator else {
