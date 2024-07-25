@@ -1,6 +1,6 @@
 import Coordination
-import UIKit
 import Foundation
+import UIKit
 
 final class MockTabCoordinatorV2: NSObject,
                                   AnyCoordinator,
