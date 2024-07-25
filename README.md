@@ -33,7 +33,7 @@ Each self-contained flow within the application can conform to the `Coordinator`
  
 `AnyCoordinator` is usable within a hierarchy conforming to UIViewController to open a child modally.
 
-`TabCoordinator` is usable within a tab bar hierarchy to open a child modally.
+`TabCoordinator` is usable within a tab bar hierarchy to open a child modally. (deprecated)
 
 `TabCoordinatorV2` is usable within a tab bar hierarchy to open a child modally, with the addition of a delegate to alert when the child tab has been selected.
 
