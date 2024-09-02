@@ -5,8 +5,9 @@ final class MockChildCoordinator: NSObject,
                                   AnyCoordinator,
                                   ChildCoordinator,
                                   NavigationCoordinator {
-    var parentCoordinator: ParentCoordinator?
     let root: UINavigationController
+    weak var parentCoordinator: ParentCoordinator?
+
     var isTabChild: Bool
     
     var coordinatorDidStart = false

@@ -6,12 +6,12 @@ final class MockTabCoordinatorV2: NSObject,
                                   AnyCoordinator,
                                   TabCoordinatorV2,
                                   ParentCoordinator {
+    var root = UITabBarController()
     lazy var delegate: TabCoordinatorDelegate? = {
         TabCoordinatorDelegate(coordinator: self)
     }()
     
-    var root: UITabBarController = UITabBarController()
-    var childCoordinators: [ChildCoordinator] = []
+    var childCoordinators = [ChildCoordinator]()
     
     var coordinatorDidStart = false
     

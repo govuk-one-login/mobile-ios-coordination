@@ -33,7 +33,7 @@ public class TabCoordinatorDelegate: NSObject,
     public func tabBarController(_ tabBarController: UITabBarController,
                                  didSelect viewController: UIViewController) {
         guard let children = coordinator?.childCoordinators as? [any AnyCoordinator],
-              let selectedChild = children.first(where: { $0.root == viewController })
+              let selectedChild = children.first(where: { $0.root === viewController })
                 as? TabItemCoordinator else {
             return
         }
