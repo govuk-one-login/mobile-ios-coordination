@@ -13,7 +13,7 @@ public protocol ParentCoordinator: Coordinator {
 }
 
 extension ParentCoordinator {
-    func openChild(_ childCoordinator: ChildCoordinator) {
+    public func openChild(_ childCoordinator: ChildCoordinator) {
         childCoordinators.append(childCoordinator)
         childCoordinator.parentCoordinator = self
         childCoordinator.start()

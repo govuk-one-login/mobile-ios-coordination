@@ -1,6 +1,4 @@
-@testable import Coordination
 import XCTest
-
 
 final class V2TabCoordinatorTests: XCTestCase {
     var sut: MockTabCoordinatorV2!

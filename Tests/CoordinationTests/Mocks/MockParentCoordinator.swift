@@ -4,9 +4,8 @@ import UIKit
 final class MockParentCoordinator: NSObject,
                                    AnyCoordinator,
                                    ParentCoordinator {
-    
-    let root: UIViewController = UIViewController()
-    var childCoordinators: [ChildCoordinator] = []
+    let root = UIViewController()
+    var childCoordinators = [ChildCoordinator]()
     
     var coordinatorDidStart = false
     
