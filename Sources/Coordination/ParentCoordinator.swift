@@ -13,6 +13,14 @@ public protocol ParentCoordinator: Coordinator {
 }
 
 extension ParentCoordinator {
+    /// openChild
+    /// Start tracking a new child coordinator.
+    /// - Parameter child: The child coordinator to be tracked
+    ///
+    /// This method should only be called directly if implementing a custom coordinator presentation.
+    /// In other cases you should call the relevant openChild method for the relevant presentation style.
+    /// For example: `openChildModally` should be used for modal presentation.
+    ///
     public func openChild(_ childCoordinator: ChildCoordinator) {
         childCoordinators.append(childCoordinator)
         childCoordinator.parentCoordinator = self
