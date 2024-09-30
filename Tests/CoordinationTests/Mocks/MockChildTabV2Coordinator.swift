@@ -6,20 +6,17 @@ final class MockChildTabV2Coordinator: NSObject,
                                        ChildCoordinator,
                                        NavigationCoordinator,
                                        TabItemCoordinator {
-    var parentCoordinator: ParentCoordinator?
-    
-    var coordinatorDidStart = false
-    var did_becomeSelected = false
-    
-    let root: UINavigationController
+    let root = UINavigationController()
+    weak var parentCoordinator: ParentCoordinator?
     
     var isTabChild: Bool
     
+    var coordinatorDidStart = false
+    var did_becomeSelected = false
+        
     init(isTabChild: Bool = true,
-         root: UINavigationController = UINavigationController(),
          parentCoordinator: ParentCoordinator) {
         self.isTabChild = isTabChild
-        self.root = root
         self.parentCoordinator = parentCoordinator
     }
     

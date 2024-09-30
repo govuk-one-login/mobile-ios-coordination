@@ -1,4 +1,3 @@
-@testable import Coordination
 import XCTest
 
 final class ParentCoordinatorTests: XCTestCase {
