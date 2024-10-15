@@ -53,7 +53,7 @@ Each self-contained flow within the application can conform to the `Coordinator`
 
 #### Implementing concrete Types conforming to the above protocols:
 
-Using the Coordinator pattern through a navigation stack, conforming to `NavigationCoordinator` is appropriate. Also conforming to `ParentCoordinator` allows a child to be opened inline and assigns the `UINavigationControllerDelegate`. Conforming to `ChildCoordinator` allows finishing the child which calls the `didRegainFocus(fromChild child: ChildCoordinator?)`
+Using the Coordinator pattern through a navigation stack, conforming to `NavigationCoordinator` is appropriate. Also conforming to `ParentCoordinator` allows a child to be opened inline and assigns the `UINavigationControllerDelegate`. Conforming to `ChildCoordinator` allows finishing the child which calls `didRegainFocus(fromChild child: ChildCoordinator?)`
 
 ```swift
 class PrimaryCoordinator: NavigationCoordinator, ParentCoordinator {
@@ -71,7 +71,7 @@ class SecondaryCoordinator: NavigationCoordinator, ChildCoordinator {
 }
 ```
 
-Using the Coordinator pattern through a navigation stack but needing a child coordinator whose child view controllers can be presented modally on a parent coordinator, conforming to `AnyCoordinator` is appropriate. Also conforming to `ParentCoordinator` allows a child to be opened modally. Conforming to `ChildCoordinator` allows finishing the child which calls the `didRegainFocus(fromChild child: ChildCoordinator?)`
+Using the Coordinator pattern through a navigation stack but needing a child coordinator whose child view controllers can be presented modally on a parent coordinator, conforming to `AnyCoordinator` is appropriate. Also conforming to `ParentCoordinator` allows a child to be opened modally. Conforming to `ChildCoordinator` allows finishing the child which calls `didRegainFocus(fromChild child: ChildCoordinator?)`
 
 ```swift
 class PrimaryCoordinator: AnyCoordinator, ParentCoordinator {
@@ -89,7 +89,7 @@ class SecondaryCoordinator: AnyCoordinator, ChildCoordinator {
 }
 ```
 
-Using the Coordinator pattern in a tab bar navigation, conforming to `TabCoordinator` is appropriate. Also conforming to `ParentCoordinator` allows a child to be opened as a tab. Conforming to `ChildCoordinator` allows finishing the child which calls the `didRegainFocus(fromChild child: ChildCoordinator?)`
+Using the Coordinator pattern in a tab bar navigation, conforming to `TabCoordinator` is appropriate. Also conforming to `ParentCoordinator` allows a child to be opened as a tab. Conforming to `ChildCoordinator` allows finishing the child which calls `didRegainFocus(fromChild child: ChildCoordinator?)`
 
 ```swift
 class PrimaryCoordinator: TabCoorinator, ParentCoordinator {
@@ -135,7 +135,7 @@ class SecondaryCoordinator: AnyCoordinator, ChildCoordinator, TabItemCoordinator
 
 #### Example of using the Coordinator pattern with the above Types:
 
-When creating the parent conforming to `NavigationCoordinator`, calling the `openChildInline()` method to create and start the child
+When creating the parent conforming to `NavigationCoordinator`, calling the `openChildInline()` method to add and start the child
 
 ```swift
 let parentCoordinator = PrimaryCoordinator(root: UINavigationController())
@@ -143,7 +143,7 @@ let childCoordinator = SecondaryCoordinator(root: root)
 firstCoordinator.openChildInline(childCoordinator)
 ```
 
-When creating the parent conforming to `AnyCoordinator`, calling the `openChildModally()` method to create and start the child
+When creating the parent conforming to `AnyCoordinator`, calling the `openChildModally()` method to add and start the child
 
 ```swift
 let parentCoordinator = PrimaryCoordinator(root: UINavigationController())
@@ -151,12 +151,21 @@ let childCoordinator = SecondaryCoordinator(root: UIViewController())
 firstCoordinator.openChildModally(childCoordinator)
 ```
 
-When creating the parent conforming to `TabCoordinator`, calling the `addTab()` method to create and start the child
+When creating the parent conforming to `TabCoordinator`, calling the `addTab()` method to add and start the child
 
 ```swift
-let parentCoordinator = PrimaryCoordinator(root: UINavigationController())
-let childCoordinator = SecondaryCoordinator(root: UIViewController())
+let parentCoordinator = PrimaryCoordinator(root: UITabBarController())
+let childCoordinator = SecondaryCoordinator(root: UINavigationController())
 firstCoordinator.addTab(childCoordinator)
+```
+
+When implementing a custom coordinator presentation, calling `openChild()` method to add and start the child.
+> **Note:** Consider using the above methods for presenting a coordinator as these will be appropriate for most use cases.
+
+```swift
+let parentCoordinator = PrimaryCoordinator()
+let childCoordinator = SecondaryCoordinator()
+firstCoordinator.openChild(childCoordinator)
 ```
 
 Once the child has finished, using the `finish()` method to restore focus to the parent
