@@ -23,8 +23,8 @@ extension V2TabCoordinatorTests {
     @MainActor
     func testAddingTab() throws {
         XCTAssertEqual(sut.childCoordinators.count, 0)
-        XCTAssertNil(sut.root.tabBar.items)
-        
+        XCTAssertNil(sut.root.viewControllers)
+
         sut.start()
         sut.addTabs()
         

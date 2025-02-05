@@ -23,13 +23,12 @@ extension TabCoordinatorTests {
     @MainActor
     func testAddingTab() {
         XCTAssertEqual(sut.childCoordinators.count, 0)
-        XCTAssertNil(sut.root.tabBar.items)
-        
-        sut.start()
+        XCTAssertNil(sut.root.viewControllers)
+
         let child = MockChildCoordinator()
         sut.addTab(child)
         
         XCTAssertEqual(sut.childCoordinators.count, 1)
-        XCTAssertEqual(sut.root.tabBar.items?.count, 1)
+        XCTAssertEqual(sut.root.viewControllers?.count, 1)
     }
 }
