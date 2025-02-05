@@ -5,9 +5,8 @@ final class MockTabCoordinator: NSObject,
                                 AnyCoordinator,
                                 TabCoordinator,
                                 ParentCoordinator {
-    
-    var root: UITabBarController = UITabBarController()
-    var childCoordinators: [ChildCoordinator] = []
+    let root = UITabBarController()
+    var childCoordinators = [ChildCoordinator]()
     
     var coordinatorDidStart = false
     

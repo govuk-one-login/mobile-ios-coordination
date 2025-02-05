@@ -5,10 +5,8 @@ final class MockNavigationCoordinator: NSObject,
                                        AnyCoordinator,
                                        NavigationCoordinator,
                                        ParentCoordinator {
-    
-    var root: UINavigationController = UINavigationController()
-    
-    var childCoordinators: [ChildCoordinator] = []
+    let root = UINavigationController()
+    var childCoordinators = [ChildCoordinator]()
     
     var coordinatorDidStart = false
     
