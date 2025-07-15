@@ -9,6 +9,7 @@ public protocol ParentCoordinator: Coordinator {
     var childCoordinators: [ChildCoordinator] { get set }
 
     func didRegainFocus(fromChild child: ChildCoordinator?)
+    func willRegainFocus(fromChild child: ChildCoordinator?)
     func performChildCleanup(child: ChildCoordinator)
 }
 
@@ -32,12 +33,18 @@ public extension ParentCoordinator {
     /// Child Did Finish.
     /// Call this method from concrete implementations of `ChildCoordinator` within the `end` method.
     func childDidFinish(_ child: ChildCoordinator) {
+        willRegainFocus(fromChild: child)
         for (index, coordinator) in childCoordinators.enumerated() where coordinator === child {
             childCoordinators.remove(at: index)
             break
         }
         performChildCleanup(child: child)
         didRegainFocus(fromChild: child)
+    }
+    
+    func willRegainFocus(fromChild child: ChildCoordinator?) {
+        // Default implementation is empty.
+        // Override this is if response if required before a child finishes.
     }
     
     func didRegainFocus(fromChild child: ChildCoordinator?) {
