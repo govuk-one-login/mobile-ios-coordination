@@ -38,12 +38,12 @@ jobs:
 
       - name: Xcode select
         run: |
-          sudo xcode-select -s /Applications/Xcode_16.app
+          sudo xcode-select -s /Applications/Xcode_16.4.app
 
       - name: Build and Test
         run: |
           set -o pipefail && xcodebuild -scheme Coordination test \
-            -destination "platform=iOS Simulator,name=iPhone 16,OS=18.2" \
+            -destination "platform=iOS Simulator,name=iPhone 16,OS=18.5" \
             -enableCodeCoverage YES \
             -resultBundlePath result.xcresult | xcbeautify
             
