@@ -1,17 +1,9 @@
 import XCTest
 
+@MainActor
 final class ParentCoordinatorTests: XCTestCase {
-    
-    var sut: MockParentCoordinator!
-    
-    @MainActor
-    override func setUp() {
-        sut = MockParentCoordinator()
-    }
-    
-    override func tearDown() {
-        sut = nil
-    }
+
+    var sut = MockParentCoordinator()
 }
 
 extension ParentCoordinatorTests {

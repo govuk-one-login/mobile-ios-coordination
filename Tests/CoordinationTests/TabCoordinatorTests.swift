@@ -1,16 +1,8 @@
 import XCTest
 
+@MainActor
 final class TabCoordinatorTests: XCTestCase {
-    var sut: MockTabCoordinator!
-    
-    @MainActor
-    override func setUp() {
-        sut = MockTabCoordinator()
-    }
-    
-    override func tearDown() {
-        sut = nil
-    }
+    var sut = MockTabCoordinator()
 }
 
 extension TabCoordinatorTests {
@@ -21,14 +13,21 @@ extension TabCoordinatorTests {
     }
     
     @MainActor
-    func testAddingTab() {
+    func testAddingTab() throws {
         XCTAssertEqual(sut.childCoordinators.count, 0)
         XCTAssertNil(sut.root.viewControllers)
 
-        let child = MockChildCoordinator()
-        sut.addTab(child)
+        sut.start()
+        sut.addTabs()
         
-        XCTAssertEqual(sut.childCoordinators.count, 1)
-        XCTAssertEqual(sut.root.viewControllers?.count, 1)
+        guard let vc = sut.root.viewControllers?[0] else {
+            XCTFail("no vc's set")
+            return
+        }
+        
+        sut.root.delegate?.tabBarController?(sut.root, didSelect: vc)
+        
+        let child = try XCTUnwrap(sut.childCoordinators.first as? MockChildTabV2Coordinator)
+        XCTAssertTrue(child.did_becomeSelected)
     }
 }

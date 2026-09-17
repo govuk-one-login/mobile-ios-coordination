@@ -19,4 +19,16 @@ extension AnyCoordinator where Self: ParentCoordinator {
         root.present(childCoordinator.root, animated: animated)
         openChild(childCoordinator)
     }
+
+    // MARK: Async
+
+    /// Asynchronous variant of `openChildModally(_:animated:)`.
+    ///
+    /// Presents the child modally, awaiting the child's asynchronous start
+    /// before returning.
+    public func openChildModallyAsync<T: AnyCoordinator & ChildCoordinator>(_ childCoordinator: T,
+                                                                            animated: Bool = true) async {
+        root.present(childCoordinator.root, animated: animated)
+        await openChildAsync(childCoordinator)
+    }
 }

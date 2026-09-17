@@ -13,11 +13,18 @@ public protocol ChildCoordinator: Coordinator {
     /// Perform any work required for returning the context to the parent coordinator.
     /// This method should ensure `childDidFinish` is called on the parent.
     func finish()
+    func finishAsync() async
 }
 
 public extension ChildCoordinator {
     /// End this child context and return control to the parent coordinator.
     func finish() {
         parentCoordinator?.childDidFinish(self)
+    }
+    
+    // MARK: Async
+    
+    func finishAsync() async {
+        await parentCoordinator?.childDidFinishAsync(self)
     }
 }

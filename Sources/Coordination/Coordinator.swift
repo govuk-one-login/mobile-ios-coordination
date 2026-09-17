@@ -5,4 +5,11 @@ import UIKit
 public protocol Coordinator: AnyObject {
     /// Pass control of the application to this coordinator
     func start()
+    func startAsync() async
+}
+
+extension Coordinator {
+    public func startAsync() async {
+        start()
+    }
 }

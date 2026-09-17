@@ -31,4 +31,28 @@ public extension NavigationCoordinator where Self: ParentCoordinator {
             root.delegate = self
         }
     }
+
+    // MARK: Async
+
+    /// Asynchronous variant of `openChildInline(_:)`.
+    ///
+    /// Opens a child coordinator flow within the same UINavigationController,
+    /// awaiting the child's asynchronous start before returning.
+    func openChildInlineAsync<T: NavigationCoordinator & ChildCoordinator>(_ childCoordinator: T) async {
+        root.delegate = childCoordinator
+        await openChildAsync(childCoordinator)
+        guard childCoordinator.root === root else {
+            assertionFailure("Child coordinators presented inline should have the same navigation controller as their parent.")
+            return
+        }
+    }
+
+    /// Asynchronous variant of `performChildCleanup(child:)`.
+    /// This ensures that the `UINavigationControllerDelegate` is correctly reset.
+    func performChildCleanupAsync(child: ChildCoordinator) async {
+        if let child = child as? NavigationCoordinator,
+           child.root === root {
+            root.delegate = self
+        }
+    }
 }

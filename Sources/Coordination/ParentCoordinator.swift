@@ -10,6 +10,9 @@ public protocol ParentCoordinator: Coordinator {
 
     func didRegainFocus(fromChild child: ChildCoordinator?)
     func performChildCleanup(child: ChildCoordinator)
+    
+    func didRegainFocusAsync(fromChild child: ChildCoordinator?) async
+    func performChildCleanupAsync(child: ChildCoordinator) async
 }
 
 extension ParentCoordinator {
@@ -25,6 +28,14 @@ extension ParentCoordinator {
         childCoordinators.append(childCoordinator)
         childCoordinator.parentCoordinator = self
         childCoordinator.start()
+    }
+    
+    // MARK: Async
+    
+    public func openChildAsync(_ childCoordinator: ChildCoordinator) async {
+        childCoordinators.append(childCoordinator)
+        childCoordinator.parentCoordinator = self
+        await childCoordinator.startAsync()
     }
 }
 
@@ -44,8 +55,27 @@ public extension ParentCoordinator {
         // Default implementation is empty.
         // Override this is if response if required after a child finishes.
     }
-    
+
     func performChildCleanup(child: ChildCoordinator) {
+        // Default implementation is empty. Override this is cleanup is required for this coordinator.
+    }
+    
+    // MARK: Async
+    func childDidFinishAsync(_ child: ChildCoordinator) async {
+        for (index, coordinator) in childCoordinators.enumerated() where coordinator === child {
+            childCoordinators.remove(at: index)
+            break
+        }
+        await performChildCleanupAsync(child: child)
+        await didRegainFocusAsync(fromChild: child)
+    }
+    
+    func didRegainFocusAsync(fromChild child: ChildCoordinator?) async {
+        // Default implementation is empty.
+        // Override this is if response if required after a child finishes.
+    }
+    
+    func performChildCleanupAsync(child: ChildCoordinator) async {
         // Default implementation is empty. Override this is cleanup is required for this coordinator.
     }
 }

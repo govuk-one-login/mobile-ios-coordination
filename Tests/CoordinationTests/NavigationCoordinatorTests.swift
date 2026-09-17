@@ -1,17 +1,9 @@
 import XCTest
 
+@MainActor
 final class NavigationCoordinatorTests: XCTestCase {
 
-    var sut: MockNavigationCoordinator!
-    
-    @MainActor
-    override func setUp() {
-        sut = MockNavigationCoordinator()
-    }
-
-    override func tearDown() {
-        sut = nil
-    }
+    var sut = MockNavigationCoordinator()
 }
 
 extension NavigationCoordinatorTests {

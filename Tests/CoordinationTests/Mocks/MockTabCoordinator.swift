@@ -1,10 +1,15 @@
 import Coordination
+import Foundation
 import UIKit
 
 final class MockTabCoordinator: NSObject,
                                 AnyCoordinator,
                                 TabCoordinator,
                                 ParentCoordinator {
+    lazy var delegate: TabCoordinatorDelegate? = {
+        TabCoordinatorDelegate(coordinator: self)
+    }()
+    
     let root = UITabBarController()
     var childCoordinators = [ChildCoordinator]()
     
@@ -12,5 +17,13 @@ final class MockTabCoordinator: NSObject,
     
     func start() {
         self.coordinatorDidStart = true
+    }
+    
+    func addTabs() {
+        let child = MockChildTabV2Coordinator(parentCoordinator: self)
+        addTab(child)
+        
+        let secondChild = MockChildTabV2Coordinator(parentCoordinator: self)
+        addTab(secondChild)
     }
 }
